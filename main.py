@@ -10,11 +10,11 @@ from datetime import datetime
 # BOT_TOKEN: 机器人的 Token (部署在 Railway 时建议在 Variables 中配置)
 BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN", "把你的机器人_TOKEN_写在这里")
 
-# SOURCE_CHANNEL_IDS: 要监视的源频道 ID 列表 (如果有新消息则读取)，用逗号分隔
-SOURCE_CHANNEL_IDS = [1453957309444133007, 222222222222222222]
-
-# TARGET_CHANNEL_ID: 格式化后发送到哪个目标频道 ID
-TARGET_CHANNEL_ID = 1495703923531583599
+# CHANNEL_MAPPING: 频道一对一转发映射。格式为 {源频道ID: 目标频道ID}
+CHANNEL_MAPPING = {
+    1453957309444133007: 1495703923531583599,  # 第一组：源频道A : 目标频道A
+    1478987667906760853: 1495712410898661448   # 第二组：源频道B : 目标频道B
+}
 
 # ROLE_IDS: 需要 @ 的身份组 ID 列表，用逗号分隔
 ROLE_IDS = [444444444444444444, 555555555555555555]
@@ -86,7 +86,7 @@ def format_message(original_text):
 @bot.event
 async def on_ready():
     print(f"✅ 登录成功，当前正在运行的机器人: {bot.user}")
-    print(f"📡 正在监视的频道 ID: {SOURCE_CHANNEL_IDS}")
+    print(f"📡 正在监视的频道映射: {CHANNEL_MAPPING}")
 
 @bot.event
 async def on_message(message):
@@ -94,20 +94,21 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    # 检查消息是否来自受监视的频道
-    if message.channel.id in SOURCE_CHANNEL_IDS:
+    # 检查消息是否来自受监视的频道字典中
+    if message.channel.id in CHANNEL_MAPPING:
         # 简单过滤：只处理包含关键标识符的消息，避免误伤普通聊天
         if "变化类型" in message.content and "当前持仓明细" in message.content:
             try:
                 # 转换格式
                 formatted_msg = format_message(message.content)
-                # 获取目标频道并发送
-                target_channel = bot.get_channel(TARGET_CHANNEL_ID)
+                # 获取对应的目标频道并发送
+                target_channel_id = CHANNEL_MAPPING[message.channel.id]
+                target_channel = bot.get_channel(target_channel_id)
                 if target_channel:
                     await target_channel.send(formatted_msg)
-                    print("✅ 成功解析并转发了一条仓位变动！")
+                    print(f"✅ 成功解析并从 {message.channel.id} 转发到了 {target_channel_id}！")
                 else:
-                    print("❌ 错误：找不到目标频道，请检查 TARGET_CHANNEL_ID 是否正确。")
+                    print(f"❌ 错误：找不到目标频道 {target_channel_id}，请检查 CHANNEL_MAPPING 配置。")
             except Exception as e:
                 print(f"❌ 解析消息时出错: {e}")
 

@@ -67,7 +67,8 @@ class TradeShare(commands.Cog):
         # 修改脚注内容
         embed.set_footer(text="（此消息为主观分享，不构成投资建议）")
 
-        await channel.send(embed=embed)
+        # 在发送 embed 的同时加上 @here 提醒
+        await channel.send(content="@here", embed=embed)
         await interaction.response.send_message("✅ 分享已成功发布至<#1458465851857436744>", ephemeral=True)
 
 # 3. 读取 Token 并启动机器人

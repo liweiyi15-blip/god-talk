@@ -64,7 +64,7 @@ class TradeShare(commands.Cog):
         )
         
         # 修改脚注内容
-        embed.set_footer(text="（此消息为主观分享，不构成投资建议，盈亏自负）")
+        embed.set_footer(text="（此消息为主观分享，不构成投资建议）")
 
         await channel.send(embed=embed)
         await interaction.response.send_message("✅ 分享已成功发布至指定频道！", ephemeral=True)

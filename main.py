@@ -68,7 +68,7 @@ class TradeShare(commands.Cog):
         embed.set_footer(text="（此消息为主观分享，不构成投资建议）")
 
         await channel.send(embed=embed)
-        await interaction.response.send_message("✅ 分享已成功发布至指定频道！", ephemeral=True)
+        await interaction.response.send_message("✅ 分享已成功发布至<#1458465851857436744>", ephemeral=True)
 
 # 3. 读取 Token 并启动机器人
 bot = MyBot()

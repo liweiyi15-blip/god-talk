@@ -43,6 +43,9 @@ class TradeShare(commands.Cog):
         direction: app_commands.Choice[str], position: app_commands.Choice[str], 
         period: app_commands.Choice[str]
     ):
+        # 自动将输入的股票代码转换为大写
+        code = code.upper()
+        
         target_channel_id = 1436730809749864652
         channel = self.bot.get_channel(target_channel_id)
 

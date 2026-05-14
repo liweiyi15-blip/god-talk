@@ -25,7 +25,7 @@ class TradeShare(commands.Cog):
     @app_commands.choices(
         direction=[
             app_commands.Choice(name="看多", value="看多"),
-            app_commands.Choice(name="看空", value="看空"),
+            app_commands.Choice(name="风险提醒", value="风险提醒"),
             app_commands.Choice(name="持有", value="持有"),
         ],
         position=[

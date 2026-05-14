@@ -57,7 +57,7 @@ class TradeShare(commands.Cog):
         embed = discord.Embed(
             title="仙人说了：", 
             description=content,
-            color=discord.Color(0x8F4313)
+            color=discord.Color(0xDE610C)
         )
         
         # 修改脚注内容

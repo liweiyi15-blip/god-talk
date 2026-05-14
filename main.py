@@ -55,7 +55,7 @@ class TradeShare(commands.Cog):
 
         # 设置 Embed 颜色为 #8F4313 (十六进制 0x8F4313)
         embed = discord.Embed(
-            title="📊 交易策略分享", 
+            title="仙人说：", 
             description=content,
             color=discord.Color(0x8F4313)
         )

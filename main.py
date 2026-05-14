@@ -32,6 +32,7 @@ class TradeShare(commands.Cog):
             app_commands.Choice(name="重仓", value="重仓"),
             app_commands.Choice(name="轻仓", value="轻仓"),
             app_commands.Choice(name="微仓", value="微仓"),
+            app_commands.Choice(name="无", value="无"),
         ],
         period=[
             app_commands.Choice(name="长线", value="长线"),

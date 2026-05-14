@@ -37,6 +37,7 @@ class TradeShare(commands.Cog):
         period=[
             app_commands.Choice(name="长线", value="长线"),
             app_commands.Choice(name="短线", value="短线"),
+            app_commands.Choice(name="永远", value="永远"),
         ]
     )
     async def share(

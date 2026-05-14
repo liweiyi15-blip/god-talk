@@ -47,15 +47,21 @@ class TradeShare(commands.Cog):
         channel = self.bot.get_channel(target_channel_id)
 
         if not channel:
-            await interaction.response.send_message("❌ 找不到目标频道，请检查机器人权限。", ephemeral=True)
+            await interaction.response.send_message("❌ 找不到目标频道，请检查机器人在目标频道的权限。", ephemeral=True)
             return
 
-        embed = discord.Embed(title="📊 交易策略分享", color=discord.Color.blue())
-        embed.add_field(name="代码", value=f"`{code}`", inline=False)
-        embed.add_field(name="方向", value=f"`{direction.value}`", inline=True)
-        embed.add_field(name="仓位", value=f"`{position.value}`", inline=True)
-        embed.add_field(name="周期", value=f"`{period.value}`", inline=True)
-        embed.set_footer(text="主观分享，盈亏自负。")
+        # 将所有信息整合进 description 强制一行显示
+        content = f"**代码:** `{code}` ｜ **方向:** `{direction.value}` ｜ **仓位:** `{position.value}` ｜ **周期:** `{period.value}`"
+
+        # 设置 Embed 颜色为 #8F4313 (十六进制 0x8F4313)
+        embed = discord.Embed(
+            title="📊 交易策略分享", 
+            description=content,
+            color=discord.Color(0x8F4313)
+        )
+        
+        # 修改脚注内容
+        embed.set_footer(text="此消息为主观分享，盈亏自负")
 
         await channel.send(embed=embed)
         await interaction.response.send_message("✅ 分享已成功发布至指定频道！", ephemeral=True)
